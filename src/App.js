@@ -12,49 +12,62 @@ const App = () => {
   const [clientSecret, setClientSecret] = useState(CLIENT_SECRET)
   const [venues, setVenues] = useState([])
   const [status, setStatus] = useState('idle')
-  const cache = useRef({})
-  const [apiCall, setApiCall] = useState(0)
+  const [error, setError] = useState(false)
+  const cache = useRef([])
 
   useEffect(() => {
-    if (!searchTerm) return
-
     const fetchData = async () => {
-      setStatus('fetching')
+      const params = {
+        client_id: clientId,
+        client_secret: clientSecret,
+        v:20200226,
+        near: 'london',
+        query: searchTerm,
+      }
       if (!cache.current[searchTerm]) {
-        const params = {
-          client_id: clientId,
-          client_secret: clientSecret,
-          v:20200226,
-          near: 'london',
-          query: searchTerm,
-        }
-        await axios.get(URL + new URLSearchParams(params))
-          .then(response => {
-            cache.current[searchTerm] = response.data.response.venues
-            setVenues(response.data.response.venues)
-              setStatus('fetched')
-              setApiCall(apiCall+1)
-          })
+        const response = await axios.get(URL + new URLSearchParams(params))
+          .then(response => response.data.response.venues)
           .catch(error => {
             console.log(error)
           })
-      } else {
-        const data = cache.current[searchTerm]
-        setVenues(data)
-        setStatus('fetched')
+        if (response.length) {
+          cache.current[searchTerm] = response
+          setVenues(response)
+          setStatus('fetched')
+          setError(false)
+          return
+        }
+        setError(true)
+        setStatus('idle')
+        } else {
+          const data = cache.current[searchTerm]
+          setVenues(data)
+          setStatus('fetched')
+          setError(false)
+        }
       }
-    }
-    fetchData()
-  }, [searchTerm])
-  console.log(venues)
-  console.log(apiCall)
-  return (
-    <>
+
+      if (searchTerm.trim()) {
+        setStatus('fetching')
+        const delay = setTimeout(() => {
+          fetchData();
+        }, 2000)
+        return () => clearTimeout(delay);
+      } else {
+        setError(false)
+        setStatus('idle')
+      }
+    }, [searchTerm, clientId, clientSecret])
+    console.log(venues)
+    console.log(cache.current)
+    return (
+      <>
       <Search
         setSearchTerm={setSearchTerm}
         setClientId={setClientId}
         setClientSecret={setClientSecret}
-      />
+        />
+      {error && <h3 style={{ textAlign: 'center', margin: '2rem'}}>Oops! not found, try another venue</h3>}
       {status === 'fetching' && <Loader />}
       {status === 'fetched' && <VenueList venues={venues} />}
     </>

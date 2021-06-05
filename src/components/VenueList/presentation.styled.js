@@ -19,17 +19,31 @@ const Card = styled.article`
   flex-direction: column;
   align-items: center;
   width: 20vw;
-  margin: .9rem 0;
+  margin: .9rem;
 
   h3 {
     margin-bottom: 0;
     font-weight: 600;
     text-transform: uppercase;
+    font-size: 1.2rem;
   }
   p {
     margin-bottom: 0;
-    padding: .2;
   }
 `
+const Button = styled.button`
+    text-transform: uppercase;
+    background: #53e3a6;
+    color: #fff;
+    padding: .475rem .75rem;
+    font-size: .875rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: .25rem;
+    display: block;
+    text-align: center;
+    margin: 2.5rem auto;
+`
 
-export { Wrapper, Card }
+export { Wrapper, Card, Button }

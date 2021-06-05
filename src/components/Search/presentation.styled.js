@@ -23,7 +23,7 @@ const Input = styled.input`
 	margin: 0 auto 10px auto;
 	text-align: center;
 	font-size: 16px;
-	color: #fff;
+	color: #53e3a6;
 	font-weight: 300;
 	width: 40vw;
 
@@ -32,7 +32,6 @@ const Input = styled.input`
 	}
 
 	&:focus{
-		background-color: #fff;
 		color: #53e3a6;
 	}
 }
