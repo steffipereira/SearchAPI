@@ -3,13 +3,11 @@ import axios from 'axios'
 import { Search, VenueList, Loader } from './components'
 
 const URL = 'https://api.foursquare.com/v2/venues/search?'
-const CLIENT_ID = 'J450J0JCLAP3WX3A3TDDNVKX4GADORLP5HGTUKICRDDDCK5N'
-const CLIENT_SECRET = 'JF423FZLNIZFUELD3SDE5OVMNT4ORPPGABGIW4FLIEHW3GGI'
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [clientId, setClientId] = useState(CLIENT_ID)
-  const [clientSecret, setClientSecret] = useState(CLIENT_SECRET)
+  const [clientId, setClientId] = useState('')
+  const [clientSecret, setClientSecret] = useState('')
   const [venues, setVenues] = useState([])
   const [status, setStatus] = useState('idle')
   const cache = useRef([])
@@ -53,8 +51,7 @@ const App = () => {
       setStatus('idle')
     } // eslint-disable-next-line
   }, [searchTerm, clientId, clientSecret])
-  console.log(venues)
-  console.log(cache.current)
+
   return (
     <>
       <Search
