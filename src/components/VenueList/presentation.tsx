@@ -22,11 +22,14 @@ export interface IVenueListProps {
 const VenueList: FC<IVenueListProps> = ({ venues }) => {
   return (
     <Wrapper>
-      {venues && venues.map(({ id ,...props}) => (
+      {venues.length ?
+        venues.map(({ id, ...props }) => (
         <Card key={id}>
           <VenueItem {...props}/>
         </Card>
-      ))}
+        )) :
+        <h3 className="error-msg">Oops! not found, try another venue</h3>
+      }
     </Wrapper>
   )
 }
