@@ -5,13 +5,24 @@ const Wrapper = styled.div`
 	background: #53e3a6;
 	opacity: .8;
 	width: 100%;
-	height: 30vh;
+	height: 35vh;
 	align-items: center;
 	flex-direction: column;
 `
 const Form = styled.form`
 	display: flex;
 	flex-direction: column;
+`
+const FormControl = styled.div`
+  margin-bottom: .2rem;
+`
+const Label = styled.label`
+	display: block;
+	text-transform: capitalize;
+	font-weight: 500;
+	color: #324d67;
+	margin-right: 1rem;
+	margin-bottom: .5rem;
 `
 const Input = styled.input`
 	display: flex;
@@ -50,4 +61,4 @@ const Button = styled.button`
 }
 `
 
-export { Wrapper, Form, Input, Button }
+export { Wrapper, Form, Input, Button, Label, FormControl }
